@@ -8,4 +8,6 @@ Then, anyone can go to http://[your local ip address]:8000/"This is what I want 
 
 On line 23 you can change the voice the computer uses. You may not have the "Daniel" voice installed if you haven't downloaded the international speech pack. 
 
+If you're feeling particularly devious, get the script running on a co-worker's machine, then hand out the URL to everyone else in the office. When you're pulled in for a talk with HR, remember: Deny, deny, deny.
+
 PROTIP: In the URL, replace the quotes with %22 and spaces with %20 so you can post links into Skype chats!
