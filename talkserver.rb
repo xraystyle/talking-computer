@@ -2,8 +2,7 @@
 
 require 'socket'
 
-ip_addr = `ifconfig en1`.match(/inet (\d*\.\d*\.\d*\.\d*)/)[1]
-
+ip_addr = IPSocket.getaddress(Socket.gethostname)
 
 server = TCPServer.new(ip_addr, 8000)
 
