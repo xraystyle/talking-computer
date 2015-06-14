@@ -2,8 +2,9 @@
 
 require 'socket'
 
-ip_addr = `ifconfig en1`.match(/inet (\d*\.\d*\.\d*\.\d*)/)[1]
-
+interface = `route get 0.0.0.0 | awk '/interface:/ {print $2}'`.strip
+mac_iface_name = `networksetup -listallhardwareports | grep -B 1 #{interface} | awk '/Hardware Port:/ {print $3}'`.strip
+ip_addr = `networksetup -getinfo #{mac_iface_name} | awk '/^IP address:/ {print $3}'`.strip
 
 server = TCPServer.new(ip_addr, 8000)
 
@@ -15,10 +16,20 @@ while (session = server.accept)
 	session.print request
 	session.print "</body></html>"
 
-	if found = request.match(/%22(.*)%22/)
-		output = found.captures[0].gsub(/%20/,' ')
-		puts output
-		`say -v Daniel \"#{output}\"`
+	begin
+
+		if found = request.match(/%22(.*)%22/)
+			output = found.captures[0].gsub(/%20/,' ')
+			puts output
+			`say -v Daniel \"#{output}\"`
+		end
+
+	rescue => e
+		puts "Something broke. Debug info:"
+		puts "exception: #{e}"
+		puts "request: #{request}"
+		puts "found: #{found}"
+		puts "output: #{output}"
 	end
 
 	session.close
