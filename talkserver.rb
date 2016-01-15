@@ -4,7 +4,7 @@ require 'socket'
 
 interface = `route get 0.0.0.0 | awk '/interface:/ {print $2}'`.strip
 mac_iface_name = `networksetup -listallhardwareports | grep -B 1 #{interface} | head -1 | cut -d " " -f 3-`.strip
-ip_addr = `networksetup -getinfo #{mac_iface_name} | awk '/^IP address:/ {print $3}'`.strip
+ip_addr = `networksetup -getinfo "#{mac_iface_name}" | awk '/^IP address:/ {print $3}'`.strip
 
 server = TCPServer.new(ip_addr, 8000)
 
