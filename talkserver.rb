@@ -20,6 +20,7 @@ while (session = server.accept)
     if found = request.match(/%22(.*)%22/)
       output = found.captures[0].gsub(/%20/,' ')
       puts output
+      `osascript -e "set Volume 10"`
       `say -v Daniel \"#{output}\"`
     end
   rescue => e
